@@ -1,0 +1,56 @@
+service: orders-source
+
+configValidationMode: error
+
+provider:
+  name: aws
+  logRetentionInDays: 7
+  region: us-east-1
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: com.reference-architecture.deploys
+    maxPreviousDeploymentArtifacts: 5
+    serverSideEncryption: AES256
+  environment:
+    TABLE_NAME: ${self:custom.tableName}
+  tags:
+    lumigo:auto-trace: 'true'
+
+custom:
+  esbuild:
+    minify: true
+  prune:
+    automatic: true
+    number: 1
+  tableName: ${self:service}
+
+plugins:
+- serverless-appsync-plugin
+- serverless-esbuild
+- serverless-iam-roles-per-function
+- serverless-deployment-bucket
+- serverless-prune-plugin
+
+resources:
+  Resources:
+    OrdersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
+        KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+  Outputs:
+    GraphQLApiUrl:
+      Value: ${appsync:url}
+    GraphQLApiKey:
+      Value: ${appsync:apiKey.test}
