@@ -1,0 +1,30 @@
+type Query {
+  listOrders(input: ListOrdersInput!): [Order!]!
+  getOrder(input: GetOrderInput!): Order!
+}
+
+type Mutation {
+  createOrder(input: CreateOrderInput!): Order!
+}
+
+input ListOrdersInput {
+  limit: Int
+  cursor: String
+}
+
+input CreateOrdersInput {
+  product: String
+  userId: String!
+  quantity: Int
+}
+
+input GetOrderInput {
+  id: String!
+}
+
+type Order {
+  id: String!
+  product: String
+  quantity: Int
+  userId: String!
+}
