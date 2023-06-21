@@ -42,28 +42,36 @@ appSync:
       config:
         function:
           handler: orders/handlers.listOrders
+    GetOrderLambda:
+      type: AWS_LAMBDA
+      config:
+        function:
+          handler: orders/handlers.getOrder
+    CreateOrderLambda:
+      type: AWS_LAMBDA
+      config:
+        function:
+          handler: orders/handlers.createOrder
   logging:
     level: ALL
     retentionInDays: 7
   pipelineFunctions:
     ListOrdersFunction:
       dataSource: ListOrdersLambda
+    GetOrderFunction:
+      dataSource: GetOrderLambda
+    CreateOrderFunction:
+      dataSource: CreateOrderLambda
   resolvers:
     Query.listOrders:
       functions:
       - ListOrdersFunction
-    # Query.getOrder:
-    #   dataSource:
-    #     type: AWS_LAMBDA
-    #     config:
-    #       function:
-    #         handler: orders/handlers.getOrder
-    # Mutation.createOrder:
-    #   dataSource:
-    #     type: AWS_LAMBDA
-    #     config:
-    #       function:
-    #         handler: orders/handlers.createOrder
+    Query.getOrder:
+      functions:
+      - GetOrderFunction
+    Mutation.createOrder:
+      functions:
+      - CreateOrderFunction
 
 package:
   individually: true
