@@ -49,7 +49,8 @@ resources:
             Principal:
               Service:
               - appsync.amazonaws.com
-            Action: sts:AssumeRole
+            Action: 
+            - sts:AssumeRole
         RoleName: merged-api-execution-role
         Policies:
         - Effect: Allow
