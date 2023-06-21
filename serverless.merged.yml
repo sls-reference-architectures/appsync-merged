@@ -27,10 +27,28 @@ resources:
       Properties:
         ApiType: MERGED
         AuthenticationType: API_KEY
-        MergedApiExecutionRoleArn: TODO <--
+        MergedApiExecutionRoleArn: !Ref MergedApiExecutionRole
         Name: appsync-merged-api
-    OrderApiAssociation:
+    OrdersApiAssociation:
       Type: AWS::AppSync::SourceApiAssociation
       Properties:
         MergedApiIdentifier: !Ref MergedApi
-        SourceApiIdentifier: arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLApi}
+        SourceApiIdentifier: arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
+    UsersApiAssociation:
+      Type: AWS::AppSync::SourceApiAssociation
+      Properties:
+        MergedApiIdentifier: !Ref MergedApi
+        SourceApiIdentifier: arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
+    MergedApiExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action: appsync:SourceGraphQL
+            Resource:
+            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
+            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
+            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}/*
+            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
