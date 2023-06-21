@@ -12,6 +12,10 @@ const setup = async () => {
   const ordersStack = await getStack(ordersStackName);
   process.env.ORDERS_GRAPH_API_URL = getGraphApiUrl(ordersStack);
   process.env.ORDERS_GRAPH_API_KEY = getGraphApiKey(ordersStack);
+  const usersStackName = 'users-source-dev';
+  const usersStack = await getStack(usersStackName);
+  process.env.USERS_GRAPH_API_URL = getGraphApiUrl(usersStack);
+  process.env.USERS_GRAPH_API_KEY = getGraphApiKey(usersStack);
 };
 
 const getGraphApiUrl = (stack) =>

@@ -1,0 +1,107 @@
+service: users-source
+
+frameworkVersion: '3'
+
+configValidationMode: error
+
+provider:
+  name: aws
+  logRetentionInDays: 7
+  region: us-east-1
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: com.reference-architecture.deploys
+    maxPreviousDeploymentArtifacts: 5
+    serverSideEncryption: AES256
+  environment:
+    TABLE_NAME: ${self:custom.tableName}
+  tags:
+    lumigo:auto-trace: 'true'
+
+custom:
+  esbuild:
+    minify: true
+  prune:
+    automatic: true
+    number: 1
+  tableName: ${self:service}
+
+appSync:
+  name: users-source-api
+  schema: users/schema.api.graphql
+  authentication:
+    type: API_KEY
+  apiKeys: 
+  - name: users-api-key
+    description: The API key for Users
+    expiresAfter: 300d
+  dataSources:
+    ListUsersLambda:
+      type: AWS_LAMBDA
+      config:
+        function:
+          handler: users/handlers.listUsers
+    GetUserLambda:
+      type: AWS_LAMBDA
+      config:
+        function:
+          handler: users/handlers.getUser
+    CreateUserLambda:
+      type: AWS_LAMBDA
+      config:
+        function:
+          handler: users/handlers.createUser
+  logging:
+    level: ALL
+    retentionInDays: 7
+  pipelineFunctions:
+    ListUsersFunction:
+      dataSource: ListUsersLambda
+    GetUserFunction:
+      dataSource: GetUserLambda
+    CreateUserFunction:
+      dataSource: CreateUserLambda
+  resolvers:
+    Query.listUsers:
+      functions:
+      - ListUsersFunction
+    Query.getUser:
+      functions:
+      - GetUserFunction
+    Mutation.createUser:
+      functions:
+      - CreateUserFunction
+
+package:
+  individually: true
+
+plugins:
+- serverless-appsync-plugin
+- serverless-esbuild
+- serverless-iam-roles-per-function
+- serverless-deployment-bucket
+- serverless-prune-plugin
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
+        KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+  Outputs:
+    GraphQLApiUrl:
+      Value: ${appsync:url}
+    GraphQLApiKey:
+      Value: ${appsync:apiKey.users-api-key}

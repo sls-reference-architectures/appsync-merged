@@ -1,0 +1,28 @@
+type Query {
+  listUsers(input: ListUsersInput!): [User!]!
+  getUser(input: GetUserInput!): User!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+}
+
+input ListUsersInput {
+  limit: Int
+  cursor: String
+}
+
+input CreateUserInput {
+  name: String
+  address: String
+}
+
+input GetUserInput {
+  id: String!
+}
+
+type User {
+  id: String!
+  name: String
+  address: String
+}
