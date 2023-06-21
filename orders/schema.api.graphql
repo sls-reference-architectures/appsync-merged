@@ -12,7 +12,7 @@ input ListOrdersInput {
   cursor: String
 }
 
-input CreateOrdersInput {
+input CreateOrderInput {
   product: String
   userId: String!
   quantity: Int

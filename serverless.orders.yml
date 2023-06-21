@@ -1,5 +1,7 @@
 service: orders-source
 
+frameworkVersion: '3'
+
 configValidationMode: error
 
 provider:
@@ -34,28 +36,37 @@ appSync:
   - name: orders-api-key
     description: The API key for Orders
     expiresAfter: 300d
+  dataSources:
+    ListOrdersLambda:
+      type: AWS_LAMBDA
+      config:
+        function:
+          handler: orders/handlers.listOrders
   logging:
     level: ALL
     retentionInDays: 7
+  pipelineFunctions:
+    ListOrdersFunction:
+      dataSource: ListOrdersLambda
   resolvers:
     Query.listOrders:
-      dataSource:
-        type: AWS_LAMBDA
-        config:
-          function:
-            handler: orders/handlers.listOrders
-    Query.getOrder:
-      dataSource:
-        type: AWS_LAMBDA
-        config:
-          function:
-            handler: orders/handlers.getOrder
-    Mutation.createOrder:
-      dataSource:
-        type: AWS_LAMBDA
-        config:
-          function:
-            handler: orders/handlers.createOrder
+      functions:
+      - ListOrdersFunction
+    # Query.getOrder:
+    #   dataSource:
+    #     type: AWS_LAMBDA
+    #     config:
+    #       function:
+    #         handler: orders/handlers.getOrder
+    # Mutation.createOrder:
+    #   dataSource:
+    #     type: AWS_LAMBDA
+    #     config:
+    #       function:
+    #         handler: orders/handlers.createOrder
+
+package:
+  individually: true
 
 plugins:
 - serverless-appsync-plugin
@@ -85,4 +96,4 @@ resources:
     GraphQLApiUrl:
       Value: ${appsync:url}
     GraphQLApiKey:
-      Value: ${appsync:apiKey.test}
+      Value: ${appsync:apiKey.orders-api-key}

@@ -23,9 +23,9 @@ jobs:
       run: npm ci
     - name: Run unit tests
       run: npm test
-    # - name: Run integration tests
-    #   run: npm run test:int
-    #   env:
-    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #     AWS_REGION: us-east-1
+    - name: Deploy Orders API
+      run: npx sls deploy --config serverless.orders.yml
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-1
