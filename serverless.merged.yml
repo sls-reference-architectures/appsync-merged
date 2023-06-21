@@ -1,0 +1,36 @@
+service: appsync-merged
+
+frameworkVersion: '3'
+
+configValidationMode: error
+
+provider:
+  name: aws
+  logRetentionInDays: 7
+  region: us-east-1
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: com.reference-architecture.deploys
+    maxPreviousDeploymentArtifacts: 5
+    serverSideEncryption: AES256
+  tags:
+    lumigo:auto-trace: 'true'
+
+plugins:
+- serverless-deployment-bucket
+
+resources:
+  Resources:
+    MergedApi:
+      Type: AWS::AppSync::GraphQLApi
+      Properties:
+        ApiType: MERGED
+        AuthenticationType: API_KEY
+        MergedApiExecutionRoleArn: TODO <--
+        Name: appsync-merged-api
+    OrderApiAssociation:
+      Type: AWS::AppSync::SourceApiAssociation
+      Properties:
+        MergedApiIdentifier: !Ref MergedApi
+        SourceApiIdentifier: arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLApi}
