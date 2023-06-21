@@ -49,12 +49,12 @@ resources:
             Principal:
               Service:
               - appsync.amazonaws.com
-            Action: 
-            - sts:AssumeRole
+            Action: sts:AssumeRole
         RoleName: merged-api-execution-role
         Policies:
         - Effect: Allow
-          Action: appsync:SourceGraphQL
+          Action: 
+          - appsync:SourceGraphQL
           Resource:
           - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
           - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
