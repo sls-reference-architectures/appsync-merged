@@ -46,9 +46,16 @@ resources:
           Version: '2012-10-17'
           Statement:
           - Effect: Allow
-            Action: appsync:SourceGraphQL
-            Resource:
-            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
-            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
-            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}/*
-            - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
+            Principal:
+              Service:
+              - appsync.amazonaws.com
+            Action: sts:AssumeRole
+        RoleName: merged-api-execution-role
+        Policies:
+        - Effect: Allow
+          Action: appsync:SourceGraphQL
+          Resource:
+          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
+          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
+          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}/*
+          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
