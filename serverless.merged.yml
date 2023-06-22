@@ -33,12 +33,14 @@ resources:
     # OrdersApiAssociation:
     #   Type: AWS::AppSync::SourceApiAssociation
     #   Properties:
+    #     Description: The association of the Orders API to the Merged API
     #     MergedApiIdentifier: !GetAtt MergedApi.ApiId
     #     SourceApiIdentifier: ${cf:orders-source-dev.GraphQLId}
     
     # UsersApiAssociation:
     #   Type: AWS::AppSync::SourceApiAssociation
     #   Properties:
+    #     Description: The association of the Users API to the Merged API
     #     MergedApiIdentifier: !GetAtt MergedApi.ApiId
     #     SourceApiIdentifier: ${cf:users-source-dev.GraphQLId}
     
