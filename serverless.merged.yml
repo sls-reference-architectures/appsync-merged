@@ -27,18 +27,21 @@ resources:
       Properties:
         ApiType: MERGED
         AuthenticationType: API_KEY
-        MergedApiExecutionRoleArn: !Ref MergedApiExecutionRole
+        MergedApiExecutionRoleArn: !GetAtt MergedApiExecutionRole.Arn
         Name: appsync-merged-api
-    OrdersApiAssociation:
-      Type: AWS::AppSync::SourceApiAssociation
-      Properties:
-        MergedApiIdentifier: !Ref MergedApi
-        SourceApiIdentifier: arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
-    UsersApiAssociation:
-      Type: AWS::AppSync::SourceApiAssociation
-      Properties:
-        MergedApiIdentifier: !Ref MergedApi
-        SourceApiIdentifier: arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
+    
+    # OrdersApiAssociation:
+    #   Type: AWS::AppSync::SourceApiAssociation
+    #   Properties:
+    #     MergedApiIdentifier: !GetAtt MergedApi.ApiId
+    #     SourceApiIdentifier: ${cf:orders-source-dev.GraphQLId}
+    
+    # UsersApiAssociation:
+    #   Type: AWS::AppSync::SourceApiAssociation
+    #   Properties:
+    #     MergedApiIdentifier: !GetAtt MergedApi.ApiId
+    #     SourceApiIdentifier: ${cf:users-source-dev.GraphQLId}
+    
     MergedApiExecutionRole:
       Type: AWS::IAM::Role
       Properties:
@@ -49,14 +52,47 @@ resources:
             Principal:
               Service:
               - appsync.amazonaws.com
-            Action: sts:AssumeRole
-        RoleName: merged-api-execution-role
+            Action: 
+            - sts:AssumeRole
+        Path: /
         Policies:
-        - Effect: Allow
-          Action: 
-          - appsync:SourceGraphQL
-          Resource:
-          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
-          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
-          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}/*
-          - arn:aws:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
+        - PolicyName: merged-api-source-permissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action: 
+              - appsync:SourceGraphQL
+              Resource:
+              - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
+              - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
+              - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}/*
+              - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
+        # - PolicyName: merged-api-schema-merge
+        #   PolicyDocument:
+        #     Version: '2012-10-17'
+        #     Statement:
+        #     - Effect: Allow
+        #       Action: 
+        #       - appsync:StartSchemaMerge
+        #       Resource:
+        #       - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:appsync-merged-dev.GraphQLId}/*
+        RoleName: merged-api-execution-role
+
+    # MergedApiRolePolicies:
+    #   Type: AWS::IAM::Policy
+    #   Properties:
+    #     PolicyName: merged-api-source-permissions
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #       - Effect: Allow
+    #         Action: 
+    #         - appsync:SourceGraphQL
+    #         Resource:
+    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}/*
+    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.GraphQLId}
+    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}/*
+    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.GraphQLId}
+    #     Roles: 
+    #     - !Ref MergedApiExecutionRole
