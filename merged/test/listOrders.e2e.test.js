@@ -3,14 +3,14 @@ import retry from 'async-retry';
 
 import { ListOrdersQuery } from '../../common/testHelpers';
 
-const BaseUri = process.env.ORDERS_API_URL ?? '';
+const BaseUri = process.env.MERGED_API_URL ?? '';
 
 describe('When listing Orders', () => {
   it('should return array of Orders', async () => {
     // ARRANGE
     const requestOptions = {
       headers: {
-        'x-api-key': process.env.ORDERS_API_KEY ?? '',
+        'x-api-key': process.env.MERGED_API_KEY ?? '',
         'Content-Type': 'application/json',
       },
       validateStatus: () => true,

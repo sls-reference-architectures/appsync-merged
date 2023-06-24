@@ -1,12 +1,12 @@
 import axios from 'axios';
 import retry from 'async-retry';
 
-import { CreateOrderQuery } from '../../common/testHelpers';
+import { ListUsersQuery } from '../../common/testHelpers';
 
 const BaseUri = process.env.MERGED_API_URL ?? '';
 
-describe('When creating Order', () => {
-  it('should succeed and return Order', async () => {
+describe('When listing Users', () => {
+  it('should return array of Users', async () => {
     // ARRANGE
     const requestOptions = {
       headers: {
@@ -15,21 +15,21 @@ describe('When creating Order', () => {
       },
       validateStatus: () => true,
     };
-    const input = { userId: 'x' };
+    const input = {};
 
     await retry(
       async () => {
         // ACT
         const { data, status } = await axios.post(
           BaseUri,
-          { query: CreateOrderQuery, variables: { input } },
+          { query: ListUsersQuery, variables: { input } },
           requestOptions,
         );
 
         // ASSERT
         expect(status).toEqual(200);
         expect(data.errors).toBeUndefined();
-        expect(data.data.createOrder.quantity).toEqual(42);
+        expect(data.data.listUsers[0].name).toEqual('John Galt');
       },
       { retries: 3 },
     );
