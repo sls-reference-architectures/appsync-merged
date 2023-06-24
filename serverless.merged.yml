@@ -30,12 +30,14 @@ resources:
         MergedApiExecutionRoleArn: !GetAtt MergedApiExecutionRole.Arn
         Name: appsync-merged-api
     
-    # OrdersApiAssociation:
-    #   Type: AWS::AppSync::SourceApiAssociation
-    #   Properties:
-    #     Description: The association of the Orders API to the Merged API
-    #     MergedApiIdentifier: !GetAtt MergedApi.ApiId
-    #     SourceApiIdentifier: ${cf:orders-source-dev.GraphQLId}
+    OrdersApiAssociation:
+      Type: AWS::AppSync::SourceApiAssociation
+      Properties:
+        Description: The association of the Orders API to the Merged API
+        MergedApiIdentifier: !GetAtt MergedApi.ApiId
+        SourceApiAssociationConfig:
+          MergeType: MANUAL_MERGE
+        SourceApiIdentifier: ${cf:orders-source-dev.GraphQLId}
     
     # UsersApiAssociation:
     #   Type: AWS::AppSync::SourceApiAssociation
