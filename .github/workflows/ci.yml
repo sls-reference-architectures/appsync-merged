@@ -23,6 +23,8 @@ jobs:
       run: npm test
   deployUsersApi:
     runs-on: ubuntu-latest
+    needs:
+      - preDeployValidation
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 18.x
@@ -46,6 +48,8 @@ jobs:
         AWS_REGION: us-east-1
   deployOrdersApi:
     runs-on: ubuntu-latest
+    needs:
+      - preDeployValidation
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 18.x
@@ -69,6 +73,9 @@ jobs:
     #     AWS_REGION: us-east-1
   deployMergedApi:
     runs-on: ubuntu-latest
+    needs:
+      - deployUsersApi
+      - deployOrdersApi
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 18.x
