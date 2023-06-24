@@ -89,3 +89,11 @@ resources:
         ApiId: !GetAtt MergedApi.ApiId
         Description: The merged-api ApiKey
         Expires: 1719168324 #2024-06-23 and some change...
+  
+  Outputs:
+    ApiKey:
+      Value: !Ref MergedApiKey
+    ApiId:
+      Value: !GetAtt MergedApi.ApiId
+    ApiUrl:
+      Value: !GetAtt MergedApi.GraphQLUrl
