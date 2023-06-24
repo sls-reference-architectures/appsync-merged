@@ -39,12 +39,14 @@ resources:
           MergeType: AUTO_MERGE
         SourceApiIdentifier: ${cf:orders-source-dev.ApiId}
     
-    # UsersApiAssociation:
-    #   Type: AWS::AppSync::SourceApiAssociation
-    #   Properties:
-    #     Description: The association of the Users API to the Merged API
-    #     MergedApiIdentifier: !GetAtt MergedApi.ApiId
-    #     SourceApiIdentifier: ${cf:users-source-dev.ApiId}
+    UsersApiAssociation:
+      Type: AWS::AppSync::SourceApiAssociation
+      Properties:
+        Description: The association of the Users API to the Merged API
+        MergedApiIdentifier: !GetAtt MergedApi.ApiId
+        SourceApiAssociationConfig:
+          MergeType: AUTO_MERGE
+        SourceApiIdentifier: ${cf:users-source-dev.ApiId}
     
     MergedApiExecutionRole:
       Type: AWS::IAM::Role
@@ -92,7 +94,7 @@ resources:
   
   Outputs:
     ApiKey:
-      Value: !Ref MergedApiKey
+      Value: !GetAtt MergedApiKey.ApiKey
     ApiId:
       Value: !GetAtt MergedApi.ApiId
     ApiUrl:
