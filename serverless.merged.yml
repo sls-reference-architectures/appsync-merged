@@ -87,6 +87,5 @@ resources:
       Type: AWS::AppSync::ApiKey
       Properties:
         ApiId: !GetAtt MergedApi.ApiId
-        ApiKeyId: watTheWat
         Description: The merged-api ApiKey
         Expires: 1719168324 #2024-06-23 and some change...
