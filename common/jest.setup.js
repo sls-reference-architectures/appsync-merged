@@ -18,10 +18,8 @@ const setup = async () => {
   process.env.USERS_GRAPH_API_KEY = getGraphApiKey(usersStack);
 };
 
-const getGraphApiUrl = (stack) =>
-  stack.Outputs?.find((o) => o.OutputKey === 'GraphQLApiUrl')?.OutputValue;
-const getGraphApiKey = (stack) =>
-  stack.Outputs?.find((o) => o.OutputKey === 'GraphQLApiKey')?.OutputValue;
+const getGraphApiUrl = (stack) => stack.Outputs?.find((o) => o.OutputKey === 'ApiUrl')?.OutputValue;
+const getGraphApiKey = (stack) => stack.Outputs?.find((o) => o.OutputKey === 'ApiKey')?.OutputValue;
 
 const getStack = async (stackName) => {
   const cf = new CloudFormationClient({ region });

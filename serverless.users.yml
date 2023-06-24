@@ -101,9 +101,9 @@ resources:
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
   Outputs:
-    GraphQLApiUrl:
+    ApiUrl:
       Value: ${appsync:url}
-    GraphQLApiKey:
+    ApiKey:
       Value: ${appsync:apiKey.users-api-key}
     ApiId:
       Value: ${appsync:id}
