@@ -10,6 +10,7 @@
     "prepare": "husky install",
     "prettier": "npx prettier --write .",
     "test": "npm run lint && npm run test:unit",
+    "test:orders:e2e": "npx jest orders/* --testMatch **/*.e2e.test.js --config jest.config.e2e.js --silent",
     "test:users:e2e": "npx jest users/* --testMatch **/*.e2e.test.js --config jest.config.e2e.js --silent",
     "test:int": "npx jest int.test --config jest.config.int.js --silent",
     "test:unit": "npx jest unit.test --config jest.config.js --silent"

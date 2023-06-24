@@ -27,3 +27,36 @@ export const CreateUserQuery = /* GraphQL */ `
     }
   }
 `;
+
+export const ListOrdersQuery = /* GraphQL */ `
+  query listOrders($input: ListOrdersInput!) {
+    listOrders(input: $input) {
+      id
+      product
+      quantity
+      userId
+    }
+  }
+`;
+
+export const GetOrderQuery = /* GraphQL */ `
+  query getOrder($input: GetOrderInput!) {
+    getOrder(input: $input) {
+      id
+      product
+      quantity
+      userId
+    }
+  }
+`;
+
+export const CreateOrderQuery = /* GraphQL */ `
+  mutation createOrder($input: CreateOrderInput!) {
+    createOrder(input: $input) {
+      id
+      product
+      quantity
+      userId
+    }
+  }
+`;
