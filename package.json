@@ -10,7 +10,7 @@
     "prepare": "husky install",
     "prettier": "npx prettier --write .",
     "test": "npm run lint && npm run test:unit",
-    "test:e2e": "npx jest e2e.test --config jest.config.e2e.js --silent",
+    "test:users:e2e": "npx jest users/* --testMatch **/*.e2e.test.js --config jest.config.e2e.js --silent",
     "test:int": "npx jest int.test --config jest.config.int.js --silent",
     "test:unit": "npx jest unit.test --config jest.config.js --silent"
   },
@@ -23,6 +23,8 @@
     "@swc/core": "^1.3.65",
     "@swc/jest": "^0.2.26",
     "@types/jest": "^29.5.2",
+    "async-retry": "^1.3.3",
+    "axios": "^1.4.0",
     "esbuild": "^0.17.19",
     "eslint": "^8.43.0",
     "eslint-config-airbnb-base": "^15.0.0",
