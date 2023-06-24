@@ -105,5 +105,5 @@ resources:
       Value: ${appsync:url}
     GraphQLApiKey:
       Value: ${appsync:apiKey.orders-api-key}
-    GraphQLId:
+    ApiId:
       Value: ${appsync:id}
