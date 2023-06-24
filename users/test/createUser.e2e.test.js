@@ -1,12 +1,12 @@
 import axios from 'axios';
 import retry from 'async-retry';
 
-import { GetUserQuery } from '../../common/testHelpers';
+import { CreateUserQuery } from '../../common/testHelpers';
 
 const BaseUri = process.env.USERS_API_URL ?? '';
 
-describe('When getting User', () => {
-  it('should return User', async () => {
+describe('When creating User', () => {
+  it('should succeed and return User', async () => {
     // ARRANGE
     const requestOptions = {
       headers: {
@@ -15,21 +15,21 @@ describe('When getting User', () => {
       },
       validateStatus: () => true,
     };
-    const input = { id: 'xyz' };
+    const input = {};
 
     await retry(
       async () => {
         // ACT
         const { data, status } = await axios.post(
           BaseUri,
-          { query: GetUserQuery, variables: { input } },
+          { query: CreateUserQuery, variables: { input } },
           requestOptions,
         );
 
         // ASSERT
         expect(status).toEqual(200);
         expect(data.errors).toBeUndefined();
-        expect(data.data.getUser.name).toEqual('John Galt');
+        expect(data.data.createUser.name).toEqual('John Galt');
       },
       { retries: 3 },
     );

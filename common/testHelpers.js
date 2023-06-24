@@ -17,3 +17,13 @@ export const GetUserQuery = /* GraphQL */ `
     }
   }
 `;
+
+export const CreateUserQuery = /* GraphQL */ `
+  mutation createUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+      name
+      address
+    }
+  }
+`;
