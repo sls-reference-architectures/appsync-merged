@@ -36,7 +36,7 @@ resources:
         Description: The association of the Orders API to the Merged API
         MergedApiIdentifier: !GetAtt MergedApi.ApiId
         SourceApiAssociationConfig:
-          MergeType: MANUAL_MERGE
+          MergeType: AUTO_MERGE
         SourceApiIdentifier: ${cf:orders-source-dev.ApiId}
     
     # UsersApiAssociation:
@@ -82,21 +82,3 @@ resources:
         #       Resource:
         #       - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:appsync-merged-dev.ApiId}/*
         RoleName: merged-api-execution-role
-
-    # MergedApiRolePolicies:
-    #   Type: AWS::IAM::Policy
-    #   Properties:
-    #     PolicyName: merged-api-source-permissions
-    #     PolicyDocument:
-    #       Version: '2012-10-17'
-    #       Statement:
-    #       - Effect: Allow
-    #         Action: 
-    #         - appsync:SourceGraphQL
-    #         Resource:
-    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.ApiId}/*
-    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.ApiId}
-    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.ApiId}/*
-    #         - arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.ApiId}
-    #     Roles: 
-    #     - !Ref MergedApiExecutionRole
