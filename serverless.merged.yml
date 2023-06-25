@@ -74,16 +74,16 @@ resources:
               - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:users-source-dev.ApiId}
               - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.ApiId}/*
               - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/${cf:orders-source-dev.ApiId}
-        - PolicyName: merged-api-schema-merge
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-            - Effect: Allow
-              Action: 
-              - appsync:StartSchemaMerge
-              Resource:
-              - !Ref UsersApiAssociation
-              - !Ref OrdersApiAssociation
+        # - PolicyName: merged-api-schema-merge
+        #   PolicyDocument:
+        #     Version: '2012-10-17'
+        #     Statement:
+        #     - Effect: Allow
+        #       Action: 
+        #       - appsync:StartSchemaMerge
+        #       Resource:
+        #       - !Ref UsersApiAssociation
+        #       - !Ref OrdersApiAssociation
         RoleName: merged-api-execution-role
 
     MergedApiKey:
@@ -100,3 +100,7 @@ resources:
       Value: !GetAtt MergedApi.ApiId
     ApiUrl:
       Value: !GetAtt MergedApi.GraphQLUrl
+    OrdersAssociationId:
+      Value: !GetAtt OrdersApiAssociation.AssociationId
+    UsersAssociationId:
+      Value: !GetAtt UsersApiAssociation.AssociationId
