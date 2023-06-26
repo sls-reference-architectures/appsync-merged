@@ -82,9 +82,7 @@ resources:
               Action: 
               - appsync:StartSchemaMerge
               Resource:
-              # - !Ref UsersApiAssociation
               - !Sub arn:aws:appsync:${self:provider.region}:${AWS::AccountId}:apis/*/sourceApiAssociations/*
-              # - !Ref OrdersApiAssociation
         RoleName: merged-api-execution-role
 
     MergedApiKey:
@@ -101,7 +99,3 @@ resources:
       Value: !GetAtt MergedApi.ApiId
     ApiUrl:
       Value: !GetAtt MergedApi.GraphQLUrl
-    OrdersAssociationId:
-      Value: !GetAtt OrdersApiAssociation.AssociationId
-    UsersAssociationId:
-      Value: !GetAtt UsersApiAssociation.AssociationId
