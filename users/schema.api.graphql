@@ -1,7 +1,7 @@
 type Query {
   listUsers(input: ListUsersInput!): [User!]!
   getUser(input: GetUserInput!): User!
-  getUser2(input: GetUserInput!): User!
+  # getUser2(input: GetUserInput!): User!
 }
 
 type Mutation {
