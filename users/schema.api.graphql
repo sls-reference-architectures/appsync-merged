@@ -27,3 +27,7 @@ type User {
   name: String
   address: String
 }
+
+type Order {
+  user: User
+}

@@ -60,3 +60,52 @@ export const CreateOrderQuery = /* GraphQL */ `
     }
   }
 `;
+
+// ## Merged (Fully-Projected) Below
+export const ListMergedOrdersQuery = /* GraphQL */ `
+  query listOrders($input: ListOrdersInput!) {
+    listOrders(input: $input) {
+      id
+      product
+      quantity
+      userId
+      user {
+        id
+        name
+        address
+      }
+    }
+  }
+`;
+
+export const GetMergedOrderQuery = /* GraphQL */ `
+  query getOrder($input: GetOrderInput!) {
+    getOrder(input: $input) {
+      id
+      product
+      quantity
+      userId
+      user {
+        id
+        name
+        address
+      }
+    }
+  }
+`;
+
+export const CreateMergedOrderQuery = /* GraphQL */ `
+  mutation createOrder($input: CreateOrderInput!) {
+    createOrder(input: $input) {
+      id
+      product
+      quantity
+      userId
+      user {
+        id
+        name
+        address
+      }
+    }
+  }
+`;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import retry from 'async-retry';
 
-import { CreateOrderQuery } from '../../common/testHelpers';
+import { CreateMergedOrderQuery } from '../../common/testHelpers';
 
 const BaseUri = process.env.MERGED_API_URL ?? '';
 
@@ -22,7 +22,7 @@ describe('When creating Order', () => {
         // ACT
         const { data, status } = await axios.post(
           BaseUri,
-          { query: CreateOrderQuery, variables: { input } },
+          { query: CreateMergedOrderQuery, variables: { input } },
           requestOptions,
         );
 
@@ -30,6 +30,7 @@ describe('When creating Order', () => {
         expect(status).toEqual(200);
         expect(data.errors).toBeUndefined();
         expect(data.data.createOrder.quantity).toEqual(42);
+        expect(data.data.createOrder.user.name).toInclude('John');
       },
       { retries: 3 },
     );
