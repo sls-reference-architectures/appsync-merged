@@ -72,6 +72,9 @@ appSync:
     Mutation.createUser:
       functions:
       - CreateUserFunction
+    Order.user:
+      functions:
+      - GetUserFunction
 
 package:
   individually: true
