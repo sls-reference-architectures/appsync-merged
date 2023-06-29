@@ -1,7 +1,10 @@
-import Logger from '@dazn/lambda-powertools-logger';
+// import Logger from '@dazn/lambda-powertools-logger';
+import { Logger } from '@aws-lambda-powertools/logger';
+
+const logger = new Logger({ serviceName: 'users' });
 
 export const listUsers = async (event) => {
-  Logger.debug('In listUsers Lambda', { event });
+  logger.debug('In listUsers Lambda', { event });
 
   // TODO: flesh out service call
   return [
@@ -14,7 +17,7 @@ export const listUsers = async (event) => {
 };
 
 export const getUser = async (event) => {
-  Logger.debug('In getUser Lambda', { event });
+  logger.debug('In getUser Lambda', { event });
 
   // TODO: flesh out service call
   return {
@@ -25,7 +28,7 @@ export const getUser = async (event) => {
 };
 
 export const createUser = async (event) => {
-  Logger.debug('In createUser Lambda', { event });
+  logger.debug('In createUser Lambda', { event });
 
   // TODO: flesh out service call
   return {
