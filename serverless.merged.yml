@@ -29,25 +29,7 @@ resources:
         AuthenticationType: API_KEY
         MergedApiExecutionRoleArn: !GetAtt MergedApiExecutionRole.Arn
         Name: appsync-merged-api
-    
-    OrdersApiAssociation:
-      Type: AWS::AppSync::SourceApiAssociation
-      Properties:
-        Description: The association of the Orders API to the Merged API
-        MergedApiIdentifier: !GetAtt MergedApi.ApiId
-        SourceApiAssociationConfig:
-          MergeType: AUTO_MERGE
-        SourceApiIdentifier: ${cf:orders-source-dev.ApiId}
-    
-    UsersApiAssociation:
-      Type: AWS::AppSync::SourceApiAssociation
-      Properties:
-        Description: The association of the Users API to the Merged API
-        MergedApiIdentifier: !GetAtt MergedApi.ApiId
-        SourceApiAssociationConfig:
-          MergeType: AUTO_MERGE
-        SourceApiIdentifier: ${cf:users-source-dev.ApiId}
-    
+
     MergedApiExecutionRole:
       Type: AWS::IAM::Role
       Properties:
@@ -91,7 +73,25 @@ resources:
         ApiId: !GetAtt MergedApi.ApiId
         Description: The merged-api ApiKey
         Expires: 1719168324 #2024-06-23 and some change...
-  
+      
+    OrdersApiAssociation:
+      Type: AWS::AppSync::SourceApiAssociation
+      Properties:
+        Description: The association of the Orders API to the Merged API
+        MergedApiIdentifier: !GetAtt MergedApi.ApiId
+        SourceApiAssociationConfig:
+          MergeType: AUTO_MERGE
+        SourceApiIdentifier: ${cf:orders-source-dev.ApiId}
+    
+    UsersApiAssociation:
+      Type: AWS::AppSync::SourceApiAssociation
+      Properties:
+        Description: The association of the Users API to the Merged API
+        MergedApiIdentifier: !GetAtt MergedApi.ApiId
+        SourceApiAssociationConfig:
+          MergeType: AUTO_MERGE
+        SourceApiIdentifier: ${cf:users-source-dev.ApiId}
+    
   Outputs:
     ApiKey:
       Value: !GetAtt MergedApiKey.ApiKey
