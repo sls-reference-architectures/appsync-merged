@@ -39,7 +39,7 @@
     "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
     "serverless": "^3.33.0",
-    "serverless-appsync-plugin": "^2.2.1",
+    "serverless-appsync-plugin": "^2.3.1",
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-esbuild": "^1.45.1",
     "serverless-iam-roles-per-function": "^3.2.0",
