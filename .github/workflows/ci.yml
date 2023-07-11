@@ -7,6 +7,8 @@ on:
   push:
     branches: [ master ]
 
+concurrency: one-at-a-time-please
+
 jobs:
   preDeployValidation:
     runs-on: ubuntu-latest
