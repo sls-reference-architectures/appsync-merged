@@ -42,12 +42,7 @@ const getNewSchema = async () => {
 };
 
 const hasBreakingChanges = (changes) => {
-  let result = false;
-  changes.forEach((change) => {
-    result = result || change.criticality.level === 'BREAKING';
-  });
+  const breakingChange = changes.find((change) => change.criticality.level === 'BREAKING');
 
-  Logger.debug('Result', { result });
-
-  return result;
+  return !!breakingChange;
 };
