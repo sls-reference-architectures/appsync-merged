@@ -1,5 +1,4 @@
-/* eslint-disable-next-line */
-import { CloudFormationClient, DescribeStacksCommand, Stack } from '@aws-sdk/client-cloudformation';
+import { CloudFormationClient, DescribeStacksCommand } from '@aws-sdk/client-cloudformation';
 
 const region = process.env.AWS_REGION || 'us-east-1';
 const stage = process.env.STAGE || 'dev';
