@@ -1,9 +1,9 @@
+import fs from 'fs/promises';
+import path from 'path';
 import { AppSyncClient, GetIntrospectionSchemaCommand } from '@aws-sdk/client-appsync';
 import { diff } from '@graphql-inspector/core';
 import { buildSchema } from 'graphql';
 import Logger from '@dazn/lambda-powertools-logger';
-import fs from 'fs/promises';
-import path from 'path';
 
 describe('GraphQL schema changes', () => {
   it('should not break existing contract', async () => {
