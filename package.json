@@ -41,7 +41,7 @@
     "jest-extended": "^4.0.1",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.1",
-    "serverless": "^3.33.0",
+    "serverless": "^3.34.0",
     "serverless-appsync-plugin": "^2.2.1",
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-esbuild": "^1.46.0",
