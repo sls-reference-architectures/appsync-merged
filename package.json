@@ -21,7 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@aws-sdk/client-appsync": "^3.521.0",
-    "@aws-sdk/client-cloudformation": "^3.521.0",
+    "@aws-sdk/client-cloudformation": "^3.525.0",
     "@faker-js/faker": "^8.4.1",
     "@graphql-inspector/core": "^5.0.2",
     "@swc/core": "^1.4.2",
