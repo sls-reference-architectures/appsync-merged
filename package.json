@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@aws-sdk/client-appsync": "^3.525.0",
+    "@aws-sdk/client-appsync": "^3.529.1",
     "@aws-sdk/client-cloudformation": "^3.529.1",
     "@faker-js/faker": "^8.4.1",
     "@graphql-inspector/core": "^5.0.2",
