@@ -72,7 +72,7 @@ resources:
       Properties:
         ApiId: !GetAtt MergedApi.ApiId
         Description: The merged-api ApiKey
-        Expires: 1719168324 #2024-06-23 and some change...
+        Expires: 1751126569 #2025-06-28 and some change...
       
     OrdersApiAssociation:
       Type: AWS::AppSync::SourceApiAssociation
