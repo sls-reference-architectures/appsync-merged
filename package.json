@@ -46,7 +46,7 @@
     "serverless-deployment-bucket": "^1.6.0",
     "serverless-esbuild": "^1.52.1",
     "serverless-iam-roles-per-function": "^3.2.0",
-    "serverless-prune-plugin": "^2.0.2"
+    "serverless-prune-plugin": "^2.1.0"
   },
   "lint-staged": {
     "*.js": "eslint",
