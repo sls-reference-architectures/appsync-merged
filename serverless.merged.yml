@@ -1,6 +1,6 @@
 service: appsync-merged
 
-frameworkVersion: '3'
+frameworkVersion: '4'
 
 configValidationMode: error
 
