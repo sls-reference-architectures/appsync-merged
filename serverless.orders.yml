@@ -80,7 +80,6 @@ plugins:
 - serverless-appsync-plugin
 - serverless-esbuild
 - serverless-iam-roles-per-function
-- serverless-deployment-bucket
 - serverless-prune-plugin
 
 resources:

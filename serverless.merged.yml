@@ -17,9 +17,6 @@ provider:
   tags:
     lumigo:auto-trace: 'true'
 
-plugins:
-- serverless-deployment-bucket
-
 resources:
   Resources:
     MergedApi:
