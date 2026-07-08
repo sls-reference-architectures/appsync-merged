@@ -8,7 +8,7 @@ provider:
   name: aws
   logRetentionInDays: 7
   region: us-east-1
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   stage: ${opt:stage, 'dev'}
   deploymentBucket:
     name: com.reference-architecture.deploys
@@ -22,9 +22,6 @@ provider:
 custom:
   esbuild:
     minify: true
-  prune:
-    automatic: true
-    number: 1
   tableName: ${self:service}
 
 appSync:
@@ -83,7 +80,6 @@ plugins:
 - serverless-appsync-plugin
 - serverless-esbuild
 - serverless-iam-roles-per-function
-- serverless-prune-plugin
 
 resources:
   Resources:
