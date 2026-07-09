@@ -29,7 +29,7 @@ appSync:
   schema: users/schema.api.graphql
   authentication:
     type: API_KEY
-  apiKeys: 
+  apiKeys:
   - name: users-api-key
     description: The API key for Users
     expiresAfter: 300d

@@ -29,7 +29,7 @@ appSync:
   schema: orders/schema.api.graphql
   authentication:
     type: API_KEY
-  apiKeys: 
+  apiKeys:
   - name: orders-api-key
     description: The API key for Orders
     expiresAfter: 300d
