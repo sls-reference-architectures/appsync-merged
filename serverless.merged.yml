@@ -17,6 +17,9 @@ provider:
   tags:
     lumigo:auto-trace: 'true'
 
+custom:
+  mergedApiKeyExpiresAt: ${file(./apiKeyExpiry.js):mergedApiKeyExpiresAt}
+
 resources:
   Resources:
     MergedApi:
@@ -69,7 +72,7 @@ resources:
       Properties:
         ApiId: !GetAtt MergedApi.ApiId
         Description: The merged-api ApiKey
-        Expires: 1751126569 #2025-06-28 and some change...
+        Expires: ${self:custom.mergedApiKeyExpiresAt}
       
     OrdersApiAssociation:
       Type: AWS::AppSync::SourceApiAssociation
