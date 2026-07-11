@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "deploy": "npx sls deploy --conceal",
+    "teardown:users": "npx sls remove --config serverless.users.yml",
+    "teardown:orders": "npx sls remove --config serverless.orders.yml",
+    "teardown:merged": "npx sls remove --config serverless.merged.yml",
     "lint": "eslint .",
     "lint:fix": "eslint '**.*.js' --fix",
     "prepare": "husky install",
