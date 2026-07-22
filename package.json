@@ -24,7 +24,7 @@
   "license": "MIT",
   "devDependencies": {
     "@aws-sdk/client-appsync": "^3.1081.0",
-    "@aws-sdk/client-cloudformation": "^3.1081.0",
+    "@aws-sdk/client-cloudformation": "^3.1090.0",
     "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^9.2.0",
     "@graphql-inspector/core": "^6.2.0",
