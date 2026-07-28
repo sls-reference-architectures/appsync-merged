@@ -54,6 +54,6 @@
     "*.{js,md}": "prettier --write --ignore-path .gitignore"
   },
   "dependencies": {
-    "@dazn/lambda-powertools-logger": "^1.28.1"
+    "@aws-lambda-powertools/logger": "^2.34.0"
   }
 }

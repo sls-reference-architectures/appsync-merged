@@ -3,7 +3,9 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { diff } from '@graphql-inspector/core';
 import { buildSchema } from 'graphql';
-import Logger from '@dazn/lambda-powertools-logger';
+import { Logger } from '@aws-lambda-powertools/logger';
+
+const logger = new Logger({ serviceName: 'users-source' });
 
 describe('GraphQL schema changes', () => {
   it('should not break existing contract', async () => {
@@ -13,7 +15,7 @@ describe('GraphQL schema changes', () => {
 
     // ACT
     const changes = existingSchema ? await diff(existingSchema, newSchema) : [];
-    Logger.debug('changes', { changes });
+    logger.debug('changes', { changes });
 
     // ASSERT
     expect(hasBreakingChanges(changes)).toBeFalse();
