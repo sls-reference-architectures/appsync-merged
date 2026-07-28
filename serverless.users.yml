@@ -17,8 +17,6 @@ provider:
     serverSideEncryption: AES256
   environment:
     TABLE_NAME: ${self:custom.tableName}
-  tags:
-    lumigo:auto-trace: 'true'
 
 custom:
   esbuild:

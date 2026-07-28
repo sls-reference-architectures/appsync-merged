@@ -14,8 +14,6 @@ provider:
     name: com.reference-architecture.deploys
     maxPreviousDeploymentArtifacts: 5
     serverSideEncryption: AES256
-  tags:
-    lumigo:auto-trace: 'true'
 
 custom:
   mergedApiKeyExpiresAt: ${file(./apiKeyExpiry.js):mergedApiKeyExpiresAt}
