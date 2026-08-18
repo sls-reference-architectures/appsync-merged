@@ -1,0 +1,47 @@
+name: Weekly Teardown
+
+# The stack is left deployed between runs. This job periodically removes
+# it so the next push exercises a cold create rather than an update — otherwise
+# a deploy that only breaks on stack *creation* would never surface.
+#
+# Deliberately teardown-only, and scheduled for a quiet hour: deleting while
+# functions are still being invoked is what orphans a Lambda log group, and an
+# orphaned log group blocks every later deploy with ResourceExistenceCheck.
+# Adopted fleet-wide 2026-08-16; crons are staggered so the whole fleet's
+# CloudFormation deletes don't land at once.
+
+on:
+  schedule:
+    - cron: '15 9 * * 0' # Sundays, staggered
+  workflow_dispatch:
+
+concurrency: one-at-a-time-please
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  Teardown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use Node.js 24.x
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: npm ci
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          action-timeout-s: 300
+      - name: Tear down Merged API
+        run: npm run teardown:merged
+      - name: Tear down Users API
+        run: npm run teardown:users
+      - name: Tear down Orders API
+        run: npm run teardown:orders
