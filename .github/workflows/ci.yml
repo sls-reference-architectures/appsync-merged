@@ -6,6 +6,9 @@ name: CI & Test
 on:
   push:
     branches: [ master ]
+  schedule:
+    - cron: '25 5 * * *' # Daily deploy; fleet staggered 5 min apart (Free plan = 20 concurrent jobs)
+  workflow_dispatch:
 
 concurrency: one-at-a-time-please
 
