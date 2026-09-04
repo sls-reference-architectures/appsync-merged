@@ -67,5 +67,9 @@ active infrastructure.
 
 ## Known constraints
 
-- `osls` (community fork) is the deploy tool, not the official `serverless` package.
+- `osls` (community fork) is the deploy tool, not the official `serverless` package. It is
+  installed under the alias name `serverless` (`"serverless": "npm:osls@^4.2.0"` in
+  devDependencies) so that `serverless-appsync-plugin`'s `peerDependencies.serverless`
+  is satisfied by osls itself; otherwise npm auto-installs a second, unused copy of the
+  real `serverless` next to it. `node_modules/serverless` is therefore osls.
 - No unified `deploy`/`test:e2e` script exists by design — always target a specific stack's config.
