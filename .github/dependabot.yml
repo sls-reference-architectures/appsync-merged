@@ -9,6 +9,17 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: weekly
+    groups:
+      # @middy/* packages ship together and share one @middy/util; a partial bump breaks the build
+      middy:
+        patterns:
+          - "@middy/*"
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/*"
+      swc:
+        patterns:
+          - "@swc/*"
   - package-ecosystem: github-actions # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
